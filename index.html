@@ -26,7 +26,8 @@ nav.top a{color:var(--ink);text-decoration:none;font:600 .95rem 'Jost',Arial,san
 @media(max-width:700px){nav.top{top:auto;bottom:12px;right:50%;transform:translateX(50%);white-space:nowrap}}
 .hero{position:relative;height:380vh}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:var(--bg)}
-.bk{position:absolute;left:0;top:0;width:var(--bw);will-change:transform;transform-origin:50.0% 30.0%}
+.bk{position:absolute;left:0;top:0;width:var(--bw);will-change:transform;transform-origin:50.0% 20.0%}
+.pour{position:absolute;left:11.25%;top:11.667%;width:78.75%;height:15.833%;overflow:hidden;will-change:transform}.pour img{position:absolute;inset:0;width:100%;height:100%;box-shadow:none!important;will-change:transform}
 .bk img{display:block;width:100%;height:auto;box-shadow:0 18px 40px rgba(0,0,0,.28)}
 .copy{position:absolute;z-index:4;left:20px;right:20px;bottom:70px;text-align:center;opacity:0;will-change:opacity}
 .copy h1{font-size:clamp(2.4rem,11vw,4.4rem);color:var(--ink)}
@@ -50,7 +51,7 @@ h2{font-size:clamp(2rem,6vw,3.2rem);margin-bottom:1.6rem}
 .fair .big{font-size:clamp(2.2rem,8vw,3.6rem)}
 .find{margin-top:2.2rem}
 footer{text-align:center;color:var(--soft);font-size:.9rem;padding:3rem 16px 6rem;border-top:1px solid var(--soft)}
-@media (prefers-reduced-motion:reduce){.hero{height:auto}.stage{position:relative;height:auto;padding:2rem 20px 7rem;min-height:100svh}.bk{position:relative;margin:0 auto 1.4rem;width:min(60vw,280px)!important;transform:none!important}.copy{position:relative;opacity:1!important;left:auto;right:auto;bottom:auto;top:auto;width:auto;transform:none!important;text-align:center}.btns{justify-content:center}.stage::after{display:none}}
+@media (prefers-reduced-motion:reduce){.hero{height:auto}.stage{position:relative;height:auto;padding:2rem 20px 7rem;min-height:100svh}.bk{position:relative;margin:0 auto 1.4rem;width:min(60vw,280px)!important;transform:none!important}.pour{display:none}.copy{position:relative;opacity:1!important;left:auto;right:auto;bottom:auto;top:auto;width:auto;transform:none!important;text-align:center}.btns{justify-content:center}.stage::after{display:none}}
 .copy h1,h2,.bkrow h3{letter-spacing:.04em;text-transform:uppercase}.copy h1{font-size:clamp(2rem,9vw,3.4rem);color:#eef4f6}.copy .lab{font-weight:400;color:#c9d8de}body{font-size:1.1rem}.fair{color:#dbe6ea}.fair .big,.fair h2,.fair p,.fair a{color:#dbe6ea}.bk img{box-shadow:0 18px 40px rgba(0,0,0,.6)}.btn{letter-spacing:.14em;text-transform:uppercase;font-size:.85rem}.btn.o{color:#c9d8de;border-color:#c9d8de}.btn:hover{background:#d9692b;border-color:#d9692b;color:#0f181e}nav.top{border-color:#8fa3ab}nav.top a{color:#dbe6ea}@media(max-width:899px){.copy h1{font-size:1.7rem}.copy .lab{font-size:1rem;margin:.4rem 0 .8rem}.btn{padding:.6rem .8rem;font-size:.75rem}}
 </style>
 </head>
@@ -59,7 +60,7 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;padding:3rem 16px 6re
 <nav class="top" aria-label="Sections"><a href="#books">Books</a><a href="#about">Helen</a><a href="#meet">Events</a></nav>
 <header class="hero">
   <div class="stage" id="stage">
-    <div class="bk" id="bk" role="img" aria-label="Forged by Betrayal and Blood by Helen Garraway: dragons looming over a frozen citadel and a column of riders crossing the snow"><img src="img/forged.jpg" alt="" width="800" height="1200"></div>
+    <div class="bk" id="bk" role="img" aria-label="Forged by Betrayal and Blood by Helen Garraway: dragons looming over a frozen citadel and a column of riders crossing the snow"><img src="img/forged.jpg" alt="" width="800" height="1200"><div class="pour" id="pour"><img id="molten" src="img/molten.webp" alt=""></div></div>
     <div class="copy" id="copy">
       <h1>Forged by Betrayal and Blood</h1>
       <div class="lab">Celestial Throne, Book 1. The Butcher of Leif, a dragonless empire, and a war he never asked for.</div>
@@ -86,7 +87,7 @@ footer{text-align:center;color:var(--soft);font-size:.9rem;padding:3rem 16px 6re
 </main>
 <footer>A mockup made by Sparsh Saini for Helen Garraway. Not affiliated, not live.</footer>
 <script>
-(()=>{const hero=document.querySelector('.hero'),stage=document.getElementById('stage'),copy=document.getElementById('copy'),bk=document.getElementById('bk');
+(()=>{const hero=document.querySelector('.hero'),stage=document.getElementById('stage'),copy=document.getElementById('copy'),bk=document.getElementById('bk'),pour=document.getElementById('pour'),mol=document.getElementById('molten');
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 let W,H,bw,bh,rx,ry,ht,tick=false;const cl=v=>Math.max(0,Math.min(1,v)),eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 const R=0.6667,S0=2.4;
@@ -94,9 +95,11 @@ function measure(){W=innerWidth;H=stage.clientHeight;const d=W>=900;bh=d?H*.72:M
 function draw(){tick=false;const p=cl((scrollY-hero.offsetTop)/ht);
  const z=eio(cl(p/.72));const s=S0-(S0-1)*z;
  // start deep in the cover, pull back until the whole cover sits in its place
- const fx=bw*0.5,fy=bh*0.3;
+ const fx=bw*0.5,fy=bh*0.2;
  const tx=(1-z)*(W/2-fx)+z*rx,ty=(1-z)*(H*.4-fy)+z*ry;
  bk.style.transform=`translate(${tx}px,${ty}px) scale(${s})`;
+ // molten metal pours up into FORGED, then cools to the cover's silver
+ const f=eio(cl((p-.04)/.4)),k=cl((p-.5)/.25);pour.style.transform=`translateY(${(1-f)*100}%)`;mol.style.transform=`translateY(${(f-1)*100}%)`;pour.style.opacity=(1-k*k).toFixed(3);
  const c=cl((p-.8)/.14);copy.style.opacity=c.toFixed(3);copy.style.transform=(W>=900?'translateY(-50%) ':'')+`translateY(${(1-c)*14}px)`}
 addEventListener('scroll',()=>{if(!tick){tick=true;requestAnimationFrame(draw)}},{passive:true});addEventListener('resize',measure);measure()})();
 </script>
